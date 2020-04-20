@@ -25,18 +25,20 @@ jobs:
           paths: .
   install:
     working_directory: ~/ec-backend
+    docker:
+      - image: circleci/node:erbium
     steps:
       - checkout
       - attach_workspace:
-        at: ~/ec-backend
+          at: ~/ec-backend
       - run:
-        name: Build
-        command: yarn build
+          name: Build
+          command: yarn build
 workflows:
   version: 2
   build_test_deploy:
     jobs:
-      - install_deps:
+      - install_deps
       - install:
-        requires:
-          - install_deps
+          requires:
+            - install_deps
