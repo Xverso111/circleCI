@@ -1,13 +1,13 @@
 version: 2
 jobs:
   install_deps:
-    working_directory: ~/ec-backend
+    working_directory: ~/circleCI
     docker:
       - image: circleci/node:erbium
     steps:
       - checkout
       - attach_workspace:
-          at: ~/ec-backend
+          at: ~/circleCI
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -24,13 +24,13 @@ jobs:
           root: .
           paths: .
   install:
-    working_directory: ~/ec-backend
+    working_directory: ~/circleCI
     docker:
       - image: circleci/node:erbium
     steps:
       - checkout
       - attach_workspace:
-          at: ~/ec-backend
+          at: ~/circleCI
       - run:
           name: Build
           command: yarn build
