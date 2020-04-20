@@ -1,0 +1,10 @@
+{
+  "name": "circleCI",
+  "version": "1.0.0",
+  "description": "prueba con yarn",
+  "main": "index.js",
+  "repository": "git@github.com:Xverso111/circleCI.git",
+  "author": "Pablo Correa <pcorrea@thoughtworks.com>",
+  "license": "na",
+  "private": false
+}
