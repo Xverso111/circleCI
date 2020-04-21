@@ -34,6 +34,9 @@ jobs:
       - run:
           name: Build
           command: yarn build
+      - run:
+          name: Copy to a folder
+          command: yarn cpBuild
       - save_cache:
           key: node_modules-cache-{{ checksum "yarn.lock" }}
           paths:
