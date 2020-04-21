@@ -1,4 +1,7 @@
 version: 2
+_rsync: &rsync
+    name: Install rsync
+    command: sudo apt install -y rsync
 jobs:
   install_deps:
     working_directory: ~/circleCI
