@@ -1,5 +1,6 @@
 version: 2
-_rsync: &rsync
+_rsync: 
+  rsync_install: &rsync_install
     name: Install rsync
     command: sudo apt install -y rsync
 jobs:
@@ -34,6 +35,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/circleCI
+      - run: *rsync_install    
       - run:
           name: Build
           command: yarn build
