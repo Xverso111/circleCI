@@ -59,8 +59,9 @@ jobs:
           paths:
             - build
   build-and-upload-image:
-    machine:
-      docker_layer_caching: true
+    working_directory: ~/circleCI
+    docker:
+       - image: circleci/node:erbium
     steps:
       - checkout
       - restore_cache:
