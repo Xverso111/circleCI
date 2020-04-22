@@ -3,6 +3,13 @@ _rsync:
   rsync_install: &rsync_install
     name: Install rsync
     command: sudo apt install -y rsync
+_build:
+  build_container: &build_container
+    name: Build container
+    command: |
+      docker build -t imagen .
+      mkdir /tmp/artifacts
+      echo "imagen" >> /tmp/artifacts/artifactory_tag
 jobs:
   install_deps:
     working_directory: ~/circleCI
@@ -27,7 +34,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
-  install:
+  build:
     working_directory: ~/circleCI
     docker:
       - image: circleci/node:erbium
@@ -35,7 +42,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/circleCI
-      - run: *rsync_install    
+      - run: *rsync_install
       - run:
           name: Build
           command: yarn build
@@ -51,11 +58,24 @@ jobs:
           key: build-cache-{{ .Revision }}
           paths:
             - build
+  build-and-upload-image:
+    machine:
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - restore_cache:
+          key: build-cache-{{ .Revision }}
+      - attach_workspace:
+          at: workspace
+      - run: *build_container
 workflows:
   version: 2
   build_test_deploy:
     jobs:
       - install_deps
-      - install:
+      - build:
           requires:
             - install_deps
+      - build-and-upload-image:
+          requires:
+            - build
