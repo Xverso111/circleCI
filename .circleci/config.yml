@@ -67,7 +67,9 @@ jobs:
           key: build-cache-{{ .Revision }}
       - attach_workspace:
           at: workspace
-      - run: *build_container
+      - run: 
+          name: Echo structure
+          command: ls -la
 workflows:
   version: 2
   build_test_deploy:
