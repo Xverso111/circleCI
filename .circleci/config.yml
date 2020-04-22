@@ -57,7 +57,7 @@ jobs:
       - save_cache:
           key: build-cache-{{ .Revision }}
           paths:
-            - build
+            - dist
   build-and-upload-image:
     working_directory: ~/circleCI
     docker:
