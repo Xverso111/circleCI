@@ -1,4 +1,13 @@
-version: 2
+version: 2.1
+commands:
+  sayhello:
+    description: "A very simple command for demonstration purposes"
+    parameters:
+      to:
+        type: string
+        default: "Hello World"
+    steps:
+      - run: echo << parameters.to >>
 _rsync: 
   rsync_install: &rsync_install
     name: Install rsync
@@ -40,6 +49,8 @@ jobs:
       - image: circleci/node:erbium
     steps:
       - checkout
+      - sayhello:
+          to: "Lev"
       - attach_workspace:
           at: ~/circleCI
       - run: *rsync_install
@@ -79,6 +90,3 @@ workflows:
       - build:
           requires:
             - install_deps
-      - build-and-upload-image:
-          requires:
-            - build
